@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00133d">
+    <title>Brayden's 18th Birthday Countdown | BTheEPIC Entertainment™</title>
+    <link rel="icon" type="image/png" href="https://btheepic.com/favicon.png">
+
+    <style>
+        body {
+            background-color: #00133d;
+            color: white;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("https://assets.btheepic.com/backgrounds/dark-blue-gradient") no-repeat center center;
+            background-size: cover;
+        }
+
+        .transparent-bg {
+            background: none !important;
+            background-color: transparent !important;
+        }
+
+        .image-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            max-height: 25vh;
+            overflow: hidden;
+        }
+
+        .header-image {
+            width: auto;
+            max-width: 100%;
+            max-height: 25vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .countdown-name {
+            text-align: center;
+            font-size: clamp(20px, 3vw, 40px);
+            font-weight: bold;
+            margin-top: 3%;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .countdown-timer {
+            clip-path: inset(20% 0 0 0);
+            margin-top: -4%;
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .countdown-date {
+            text-align: center;
+            font-size: clamp(20px, 3vw, 40px);
+            font-weight: bold;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+	<script src="/scripts/analytics.js"></script>
+</head>
+
+<body>
+    <div class="spacer"></div>
+	<style>
+        .spacer {
+            height: 5vh;
+        }
+
+        /* Adjust for portrait mode */
+        @media (orientation: portrait) {
+            .spacer {
+                height: 20vh;
+            }
+        }
+    </style>
+	
+    <div class="image-container" id="photo-container">
+        <img src="https://assets.btheepic.com/brayden/2024/senior-face-2" 
+             alt="Brayden Senior Photo"
+             class="header-image">
+    </div>
+
+    <div class="countdown-name">Brayden's 18th Birthday</div>
+
+    <div id="countdown-container">
+        <script src="https://cdn.logwork.com/widget/countdown.js"></script>
+        <a href="https://logwork.com/countdown-timer" class="countdown-timer" 
+           data-style="circles" 
+           data-timezone="America/Chicago" 
+           data-textcolor="#00133d" 
+           data-date="2025-05-08 00:00" 
+           data-background="#34e4ff" 
+           data-digitscolor="#ffffff" 
+           data-unitscolor="#ffffff">
+           -
+        </a>
+    </div>
+
+    <div class="countdown-date">May 8, 2025</div>
+
+    <div id="birthday-button" style="display: none; text-align: center; margin-top: 20px;">
+        <a href="mailto:brayden@btheepic.com?subject=Happy Birthday! 🎉" style="text-decoration: none;">
+            <button style="font-size: 18px; padding: 10px 20px; background-color: #34e4ff; color: black; border: none; border-radius: 5px; cursor: pointer;">
+                🎂 Send a Birthday Email!
+            </button>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const photoContainer = document.getElementById("photo-container");
+			const spacer = document.querySelector(".spacer");
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get("photo") === "true") {
+                photoContainer.style.display = "flex";
+            }
+
+            if (urlParams.get("transparent") === "true") {
+                document.body.classList.add("transparent-bg");
+            }
+
+            function checkDate() {
+                fetch("https://worldtimeapi.org/api/timezone/America/Chicago")
+                .then(response => response.json())
+                .then(data => {
+                    let dateTimeString = data.datetime;
+                    let dateParts = dateTimeString.split("T")[0].split("-");
+                    let year = parseInt(dateParts[0], 10);
+                    let month = parseInt(dateParts[1], 10);
+                    let day = parseInt(dateParts[2], 10);
+
+                    if (year > 2025 || (year === 2025 && month >= 5 && day >= 8)) {
+                        document.getElementById("countdown-container").style.display = "none";
+                        document.getElementById("birthday-button").style.display = "block";
+                    }
+                })
+                .catch(error => console.error("Error fetching real time:", error));
+            }
+
+            checkDate();
+			
+            const landscapeVH = urlParams.get("lsvh") || 5; // Default if not provided
+            const portraitVH = urlParams.get("pvh") || 20; // Default if not provided
+
+            function updateSpacer() {
+                if (window.matchMedia("(orientation: portrait)").matches) {
+                    spacer.style.height = `${portraitVH}vh`;
+                } else {
+                    spacer.style.height = `${landscapeVH}vh`;
+                }
+            }
+
+            updateSpacer();
+            window.addEventListener("resize", updateSpacer);
+        });
+    </script>
+</body>
+</html>
