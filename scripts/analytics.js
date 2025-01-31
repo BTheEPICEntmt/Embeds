@@ -1,5 +1,5 @@
 (function() {
-    var GA_TRACKING_ID = 'REPLACE_WITH_GA4_ID'; // Replace with your GA4 ID. Ex: G-0000000000
+    var GA_TRACKING_ID = 'G-8G5QR07V9G'; // Replace with your GA4 ID. Ex: G-0000000000
 
     if (!GA_TRACKING_ID || GA_TRACKING_ID === 'REPLACE_WITH_GA4_ID') { // Do NOT replace this!
         console.warn("⚠️ Google Analytics is not configured! Please add your own 'GA_TRACKING_ID' or remove the '/scripts/analytics.js' reference in your HTML.");
